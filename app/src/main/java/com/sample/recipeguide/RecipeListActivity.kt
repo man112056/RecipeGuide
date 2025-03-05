@@ -1,6 +1,7 @@
 package com.sample.recipeguide
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,9 +34,19 @@ class RecipeListActivity : AppCompatActivity() {
         binding.recyclerViewRecipes.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewRecipes.adapter = adapter
 
+        // Show loader before fetching data
+        binding.progressBar.visibility = View.VISIBLE
+
         // Observe LiveData for recipes
         viewModel.recipes.observe(this) { recipes ->
+            binding.progressBar.visibility = View.GONE  // Hide loader when data is loaded
             adapter.updateRecipes(recipes)
+        }
+
+        // Observe error state
+        viewModel.error.observe(this) { errorMessage ->
+            binding.progressBar.visibility = View.GONE  // Hide loader on error
+            // Show error message (Toast or Snackbar)
         }
 
         viewModel.fetchRecipes(category)
