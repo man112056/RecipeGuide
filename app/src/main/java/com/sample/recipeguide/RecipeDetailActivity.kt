@@ -1,10 +1,11 @@
 package com.sample.recipeguide
 
 import android.os.Bundle
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -23,19 +24,25 @@ class RecipeDetailActivity : AppCompatActivity() {
             return
         }
 
-        val repository = RecipeRepository(this
-                , ApiService.create())
+        val repository = RecipeRepository(this, ApiService.create())
         viewModel = ViewModelProvider(this, RecipeViewModel.Factory(repository)).get(RecipeViewModel::class.java)
 
-        viewModel.fetchRecipeDetails(recipeId) // Call API to fetch details
+        viewModel.fetchRecipeDetails(recipeId) // Fetch recipe details from API
 
         val titleTextView = findViewById<TextView>(R.id.textViewTitle)
-        val summaryTextView = findViewById<TextView>(R.id.textViewSummary)
+        val summaryWebView = findViewById<WebView>(R.id.webViewSummary)
         val recipeImageView = findViewById<ImageView>(R.id.imageViewRecipe)
+
+        // Configure WebView
+        summaryWebView.settings.javaScriptEnabled = true
+        summaryWebView.webViewClient = WebViewClient()
 
         viewModel.recipeDetail.observe(this) { recipe ->
             titleTextView.text = recipe.title
-            summaryTextView.text = recipe.summary
+
+            // Load summary into WebView
+            val htmlContent = "<html><body>${recipe.summary}</body></html>"
+            summaryWebView.loadData(htmlContent, "text/html", "UTF-8")
 
             // Load image using Glide
             Glide.with(this)
