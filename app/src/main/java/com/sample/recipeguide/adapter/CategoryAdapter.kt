@@ -1,10 +1,12 @@
-package com.sample.recipeguide
+package com.sample.recipeguide.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.sample.recipeguide.model.Category
+import com.sample.recipeguide.R
 
 class CategoryAdapter(
     private val categories: List<Category>,

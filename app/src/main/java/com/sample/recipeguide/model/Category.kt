@@ -1,4 +1,4 @@
-package com.sample.recipeguide
+package com.sample.recipeguide.model
 
 import java.io.Serializable
 

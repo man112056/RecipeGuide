@@ -1,9 +1,11 @@
-package com.sample.recipeguide
+package com.sample.recipeguide.views
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.sample.recipeguide.model.Category
+import com.sample.recipeguide.adapter.CategoryAdapter
 import com.sample.recipeguide.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {

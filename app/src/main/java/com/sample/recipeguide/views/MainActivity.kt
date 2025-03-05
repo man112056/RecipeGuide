@@ -1,14 +1,11 @@
-package com.sample.recipeguide
+package com.sample.recipeguide.views
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.sample.recipeguide.databinding.ActivityMainBinding
 
-
-    class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
 

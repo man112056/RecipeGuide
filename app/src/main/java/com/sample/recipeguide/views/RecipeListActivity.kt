@@ -1,10 +1,14 @@
-package com.sample.recipeguide
+package com.sample.recipeguide.views
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sample.recipeguide.service.ApiService
+import com.sample.recipeguide.adapter.RecipeAdapter
+import com.sample.recipeguide.service.RecipeRepository
+import com.sample.recipeguide.viewmodel.RecipeViewModel
 import com.sample.recipeguide.databinding.ActivityRecipeListBinding
 
 class RecipeListActivity : AppCompatActivity() {

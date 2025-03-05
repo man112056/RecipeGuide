@@ -1,4 +1,4 @@
-package com.sample.recipeguide
+package com.sample.recipeguide.views
 
 import android.os.Bundle
 import android.view.View
@@ -7,10 +7,13 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.sample.recipeguide.service.ApiService
+import com.sample.recipeguide.R
+import com.sample.recipeguide.service.RecipeRepository
+import com.sample.recipeguide.viewmodel.RecipeViewModel
 
 class RecipeDetailActivity : AppCompatActivity() {
 
@@ -28,7 +31,9 @@ class RecipeDetailActivity : AppCompatActivity() {
         }
 
         val repository = RecipeRepository(this, ApiService.create())
-        viewModel = ViewModelProvider(this, RecipeViewModel.Factory(repository)).get(RecipeViewModel::class.java)
+        viewModel = ViewModelProvider(this,
+            RecipeViewModel.Factory(repository)
+        ).get(RecipeViewModel::class.java)
 
         // UI elements
         val titleTextView = findViewById<TextView>(R.id.textViewTitle)

@@ -1,6 +1,8 @@
-package com.sample.recipeguide
+package com.sample.recipeguide.viewmodel
 
 import androidx.lifecycle.*
+import com.sample.recipeguide.model.Recipe
+import com.sample.recipeguide.service.RecipeRepository
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {

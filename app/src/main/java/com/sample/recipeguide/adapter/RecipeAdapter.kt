@@ -1,4 +1,4 @@
-package com.sample.recipeguide
+package com.sample.recipeguide.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sample.recipeguide.databinding.ItemRecipeBinding
+import com.sample.recipeguide.model.Recipe
+import com.sample.recipeguide.views.RecipeDetailActivity
 
 class RecipeAdapter(
     private var recipes: List<Recipe>,

@@ -1,5 +1,7 @@
-package com.sample.recipeguide
+package com.sample.recipeguide.service
 
+import com.sample.recipeguide.model.Recipe
+import com.sample.recipeguide.model.RecipeResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
