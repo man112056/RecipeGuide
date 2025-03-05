@@ -2,11 +2,8 @@ package com.sample.recipeguide
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.sample.recipeguide.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {
@@ -20,7 +17,18 @@ class CategoryActivity : AppCompatActivity() {
         val categories: List<Category> = listOf(
             Category("Main Course"),
             Category("Side Dish"),
-            Category("Dessert")
+            Category("Dessert"),
+            Category("Appetizer"),
+            Category("Salad"),
+            Category("Bread"),
+            Category("Breakfast"),
+            Category("Soup"),
+            Category("Beverage"),
+            Category("Sauce"),
+            Category("Marinade"),
+            Category("Finger Food"),
+            Category("Snack"),
+            Category("Drink")
         )
 
         val adapter = CategoryAdapter(categories) { selectedCategory ->
@@ -29,7 +37,8 @@ class CategoryActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.recyclerViewCategories.layoutManager = LinearLayoutManager(this)
+        // Use GridLayoutManager for a grid-style display
+        binding.recyclerViewCategories.layoutManager = GridLayoutManager(this, 2) // 2 columns
         binding.recyclerViewCategories.adapter = adapter
     }
 }
