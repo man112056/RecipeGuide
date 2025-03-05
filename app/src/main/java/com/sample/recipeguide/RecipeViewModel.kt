@@ -8,6 +8,9 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
     private val _recipes = MutableLiveData<List<Recipe>>()
     val recipes: LiveData<List<Recipe>> get() = _recipes
 
+    private val _recipeDetail = MutableLiveData<Recipe>()
+    val recipeDetail: LiveData<Recipe> get() = _recipeDetail
+
     private val _favoriteIds = MutableLiveData<List<Int>>()
     val favoriteIds: LiveData<List<Int>> get() = _favoriteIds
 
@@ -21,6 +24,17 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
                 _recipes.postValue(response.results)
             } catch (e: Exception) {
                 _error.postValue("Failed to load recipes: ${e.message}")
+            }
+        }
+    }
+
+    fun fetchRecipeDetails(recipeId: Int) {
+        viewModelScope.launch {
+            try {
+                val recipe = repository.getRecipeDetails(recipeId)
+                _recipeDetail.postValue(recipe)
+            } catch (e: Exception) {
+                _error.postValue("Failed to load recipe details: ${e.message}")
             }
         }
     }
@@ -42,7 +56,6 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
         }
     }
 
-    // Factory class inside ViewModel
     class Factory(private val repository: RecipeRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RecipeViewModel::class.java)) {

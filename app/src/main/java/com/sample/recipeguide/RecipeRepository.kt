@@ -9,6 +9,10 @@ class RecipeRepository(context: Context, private val apiService: ApiService) {
 
     suspend fun getRecipes(query: String) = apiService.getRecipes(query)
 
+    suspend fun getRecipeDetails(recipeId: Int): Recipe {
+        return apiService.getRecipeDetails(recipeId)
+    }
+
     fun getFavoriteRecipes(): List<Int> = sharedPrefManager.getFavorites()
 
     fun addRecipeToFavorites(recipeId: Int) = sharedPrefManager.addFavorite(recipeId)

@@ -1,10 +1,10 @@
 package com.sample.recipeguide
 
-
+import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.sample.recipeguide.databinding.ItemRecipeBinding
 
 class RecipeAdapter(
@@ -17,12 +17,13 @@ class RecipeAdapter(
 
         fun bind(recipe: Recipe) {
             binding.textViewRecipeTitle.text = recipe.title
-//            binding.textViewRecipeSummary.text = recipe.summary
 
-            // Load image (if you are using Glide/Picasso)
-            // Glide.with(binding.imageViewRecipe.context).load(recipe.image).into(binding.imageViewRecipe)
+            // Load image using Glide
+            Glide.with(binding.imageViewRecipe.context)
+                .load(recipe.image)
+                .into(binding.imageViewRecipe)
 
-            // Toggle favorite state
+            // Favorite button toggle
 //            binding.buttonFavorite.setImageResource(
 //                if (recipe.isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
 //            )
@@ -30,6 +31,17 @@ class RecipeAdapter(
             // Favorite button click listener
             binding.buttonFavorite.setOnClickListener {
                 onFavoriteClick(recipe)
+            }
+
+            // Click listener to open details screen
+            binding.root.setOnClickListener {
+                val intent = Intent(binding.root.context, RecipeDetailActivity::class.java).apply {
+                    putExtra("RECIPE_ID", recipe.id)
+                    putExtra("RECIPE_TITLE", recipe.title)
+                    putExtra("RECIPE_IMAGE", recipe.image)
+                    putExtra("RECIPE_SUMMARY", recipe.summary)
+                }
+                binding.root.context.startActivity(intent)
             }
         }
     }
