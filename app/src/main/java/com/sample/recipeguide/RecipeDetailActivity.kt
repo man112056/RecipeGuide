@@ -1,11 +1,13 @@
 package com.sample.recipeguide
 
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -13,6 +15,7 @@ import com.bumptech.glide.Glide
 class RecipeDetailActivity : AppCompatActivity() {
 
     private lateinit var viewModel: RecipeViewModel
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,22 +30,24 @@ class RecipeDetailActivity : AppCompatActivity() {
         val repository = RecipeRepository(this, ApiService.create())
         viewModel = ViewModelProvider(this, RecipeViewModel.Factory(repository)).get(RecipeViewModel::class.java)
 
-        viewModel.fetchRecipeDetails(recipeId) // Fetch recipe details from API
-
+        // UI elements
         val titleTextView = findViewById<TextView>(R.id.textViewTitle)
         val summaryWebView = findViewById<WebView>(R.id.webViewSummary)
         val recipeImageView = findViewById<ImageView>(R.id.imageViewRecipe)
+        progressBar = findViewById(R.id.progressBar) // Reference ProgressBar
 
-        // Configure WebView
-        summaryWebView.settings.javaScriptEnabled = true
-        summaryWebView.webViewClient = WebViewClient()
+        // Show progress before fetching data
+        progressBar.visibility = View.VISIBLE
+
+        viewModel.fetchRecipeDetails(recipeId) // Call API to fetch details
 
         viewModel.recipeDetail.observe(this) { recipe ->
+            progressBar.visibility = View.GONE // Hide progress once data is loaded
+
             titleTextView.text = recipe.title
 
-            // Load summary into WebView
-            val htmlContent = "<html><body>${recipe.summary}</body></html>"
-            summaryWebView.loadData(htmlContent, "text/html", "UTF-8")
+            // Load summary in WebView
+            summaryWebView.loadData(recipe.summary, "text/html", "UTF-8")
 
             // Load image using Glide
             Glide.with(this)
@@ -51,6 +56,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         }
 
         viewModel.error.observe(this) { errorMsg ->
+            progressBar.visibility = View.GONE // Hide progress on error
             Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show()
         }
     }

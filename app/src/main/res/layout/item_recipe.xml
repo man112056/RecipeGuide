@@ -34,13 +34,6 @@
                 android:text="Recipe Title"
                 android:textAppearance="?attr/textAppearanceHeadline6"/>
 
-            <TextView
-                android:id="@+id/textViewRecipeSummary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recipe Summary"
-                android:textAppearance="?attr/textAppearanceBody2"/>
-
         </LinearLayout>
 
         <ImageView
